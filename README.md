@@ -1,6 +1,6 @@
 # ivxj
 
-Compute IVXJ estimates for unbalanced panel data (single regressor)!
+Compute IVXJ estimates for unbalanced panel data under univariate case!
 
 ## Installation
 

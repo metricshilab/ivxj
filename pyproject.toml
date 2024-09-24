@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "ivxj"
 version = "0.1.0"
-description = "Compute IVXJ estimates for unbalanced panel data (single regressor)!"
+description = "Compute IVXJ estimates for unbalanced panel data under univariate case!"
 authors = ["Ji Pan"]
 license = "MIT"
 readme = "README.md"
