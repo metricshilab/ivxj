@@ -36,9 +36,10 @@ def gen_ivx_for_one_time_series(x, rhoz):
     """
     T = len(x)
 
-    dx = np.diff(x, prepend=x[0])  # First difference, with dx_1 = x_1
+    dx = np.diff(x)
+    dx = np.insert(dx, 0, x[0]) # First difference, with dx_1 = x_1
     powers = rhoz ** np.arange(T-1, -1, -1)
-    
+  
     z = np.cumsum(powers * dx) / powers
 
     return z
