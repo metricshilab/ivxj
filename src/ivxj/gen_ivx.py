@@ -18,7 +18,7 @@ def gen_ivx(x, rhoz, Tlens):
     subMatList = split_mat_into_cells(x, Tlens)
     
     # Generate IVX for each submatrix
-    zta = np.vstack([gen_ivx_for_one_time_series(xt, rhoz) for xt in subMatList])
+    zta = np.concatenate([gen_ivx_for_one_time_series(xt, rhoz) for xt in subMatList])
 
     return zta
 
