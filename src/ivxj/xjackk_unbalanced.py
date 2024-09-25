@@ -34,7 +34,7 @@ def xjackk_unbalanced(xlong, Tlens):
         x_first_half = x[:(To-1)//2]
         x_first_half_fwd = x[1:(To+1)//2]
         xx_for_correction = np.dot(x_first_half, x_first_half_fwd)
-        x0_for_correction = 0.5 * (x[0] * np.sum(x[1::2]) + x[1] * np.sum(x[0::2]))
+        x0_for_correction = 0.5 * (x[0] * np.sum(x[1:-1:2]) + x[1] * np.sum(x[0:-2:2]))
 
         if T % 2 != 0:
             numer, denom = xjackk_for_odd_time_len(x, xx_for_correction, x0_for_correction)
