@@ -17,7 +17,7 @@ def within_trans(A, Tlens):
     subMatList = split_mat_into_cells(A, Tlens)
     
     # Apply within transformation (subtracting the mean) to each submatrix
-    B = np.vstack([x - np.mean(x, axis=0) for x in subMatList])
+    B = np.concatenate([x - np.mean(x, axis=0) for x in subMatList])
 
     return B
 
