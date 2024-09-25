@@ -1,10 +1,10 @@
 import numpy as np
 
-from split_mat_into_cells import split_mat_into_cells
-from xjackk_unbalanced import xjackk_unbalanced
-from delete_period_obs import delete_period_obs
-from gen_ivx import gen_ivx
-from within_trans import within_trans
+from ivxj.split_mat_into_cells import split_mat_into_cells
+from ivxj.xjackk_unbalanced import xjackk_unbalanced
+from ivxj.delete_period_obs import delete_period_obs
+from ivxj.gen_ivx import gen_ivx
+from ivxj.within_trans import within_trans
 
 
 def ivxj(y, x, rhoz, Tlens):

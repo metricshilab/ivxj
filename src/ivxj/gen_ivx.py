@@ -1,6 +1,6 @@
 import numpy as np
 
-from split_mat_into_cells import split_mat_into_cells
+from ivxj.split_mat_into_cells import split_mat_into_cells
 
 def gen_ivx(x, rhoz, Tlens):
     """
