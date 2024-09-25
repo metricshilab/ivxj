@@ -1,5 +1,12 @@
 import numpy as np
 
+from split_mat_into_cells import split_mat_into_cells
+from xjackk_unbalanced import xjackk_unbalanced
+from delete_period_obs import delete_period_obs
+from gen_ivx import gen_ivx
+from within_trans import within_trans
+
+
 def ivxj(y, x, rhoz, Tlens):
     """
     IVXD for univariate case, allowing for unbalanced panel.
@@ -75,28 +82,3 @@ def sum_of_mean_sq(A, Tlens):
     subMatList = split_mat_into_cells(A, Tlens)
     B = np.sum([np.mean(x)**2 for x in subMatList] * (Tlens**0.95))
     return B
-
-
-def split_mat_into_cells(A, Tlens):
-    """
-    Splits matrix A into cells according to the lengths in Tlens.
-    """
-    return [A[sum(Tlens[:i]):sum(Tlens[:i+1])] for i in range(len(Tlens))]
-
-
-# Placeholder functions for missing subroutines. Implement them as needed.
-def xjackk_unbalanced(x, Tlens):
-    # Placeholder for the xjackkUnbalanced function
-    pass
-
-def delete_period_obs(data, Tlens, periods_to_delete, keep_last=True):
-    # Placeholder for deletePeriodObs function
-    pass
-
-def gen_ivx(xLag, rhoz, Tlens):
-    # Placeholder for genIVX function
-    pass
-
-def within_trans(data, Tlens):
-    # Placeholder for withinTrans function
-    pass
