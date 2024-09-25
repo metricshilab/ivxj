@@ -66,9 +66,9 @@ def xjackk_for_odd_time_len(x, xx_for_correction, x0_for_correction):
 
     T = len(x)
 
-    x_odd = x[0:T-1:2]
-    x_odd_fwd = x[2::2]
-    x_even = x[1:T:2]
+    x_odd = x[0:T-2:2]
+    x_odd_fwd = x[2:T:2]
+    x_even = x[1:T-1:2]
 
     # Within transformation
     x_odd_tilde = x_odd - np.mean(x_odd)
