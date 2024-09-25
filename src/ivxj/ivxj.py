@@ -30,7 +30,7 @@ def ivxj(y, x, rhoz, Tlens):
 
     # Lost one period due to lag
     y = delete_period_obs(y, Tlens, 1)
-    xLag = delete_period_obs(x, Tlens, 1, keep_last=False)
+    xLag = delete_period_obs(x, Tlens, 1, False)
     x = delete_period_obs(x, Tlens, 1)
 
     # Update Tlens
