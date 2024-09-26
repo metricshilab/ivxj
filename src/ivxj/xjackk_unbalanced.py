@@ -66,6 +66,11 @@ def xjackk_for_odd_time_len(x, xx_for_correction, x0_for_correction):
 
     T = len(x)
 
+    # Ensure everything is in float64 for consistency
+    x = np.array(x, dtype=np.float64)
+    xx_for_correction = np.float64(xx_for_correction)
+    x0_for_correction = np.float64(x0_for_correction)
+
     x_odd = x[0:T-2:2]
     x_odd_fwd = x[2:T:2]
     x_even = x[1:T-1:2]
