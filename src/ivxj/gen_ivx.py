@@ -1,6 +1,6 @@
 import numpy as np
 
-from split_mat_into_cells import split_mat_into_cells
+from ivxj.split_mat_into_cells import split_mat_into_cells
 
 def gen_ivx(x, rhoz, Tlens):
     """
@@ -18,7 +18,7 @@ def gen_ivx(x, rhoz, Tlens):
     subMatList = split_mat_into_cells(x, Tlens)
     
     # Generate IVX for each submatrix
-    zta = np.vstack([gen_ivx_for_one_time_series(xt, rhoz) for xt in subMatList])
+    zta = np.concatenate([gen_ivx_for_one_time_series(xt, rhoz) for xt in subMatList])
 
     return zta
 
@@ -34,11 +34,16 @@ def gen_ivx_for_one_time_series(x, rhoz):
     Returns:
         z: 1D array-like, the generated IVX for the time series
     """
+    # Ensure everything is in float64 for consistency
+    x = np.array(x, dtype=np.float64)
+    rhoz = np.float64(rhoz)
+
     T = len(x)
 
-    dx = np.diff(x, prepend=x[0])  # First difference, with dx_1 = x_1
+    dx = np.diff(x)
+    dx = np.insert(dx, 0, x[0]) # First difference, with dx_1 = x_1
     powers = rhoz ** np.arange(T-1, -1, -1)
-    
+  
     z = np.cumsum(powers * dx) / powers
 
     return z

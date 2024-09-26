@@ -11,6 +11,9 @@ def split_mat_into_cells(A, Tlens):
     Returns:
         List of submatrices
     """
+    # Ensure everything is in float64 for consistency
+    A = np.array(A, dtype=np.float64)
+
     end_indices = np.cumsum(Tlens)
     start_indices = np.concatenate(([0], end_indices[:-1]))
     

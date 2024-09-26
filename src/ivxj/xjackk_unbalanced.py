@@ -34,7 +34,7 @@ def xjackk_unbalanced(xlong, Tlens):
         x_first_half = x[:(To-1)//2]
         x_first_half_fwd = x[1:(To+1)//2]
         xx_for_correction = np.dot(x_first_half, x_first_half_fwd)
-        x0_for_correction = 0.5 * (x[0] * np.sum(x[1::2]) + x[1] * np.sum(x[0::2]))
+        x0_for_correction = 0.5 * (x[0] * np.sum(x[1:-1:2]) + x[1] * np.sum(x[0:-2:2]))
 
         if T % 2 != 0:
             numer, denom = xjackk_for_odd_time_len(x, xx_for_correction, x0_for_correction)
@@ -66,13 +66,18 @@ def xjackk_for_odd_time_len(x, xx_for_correction, x0_for_correction):
 
     T = len(x)
 
+    # Ensure everything is in float64 for consistency
+    x = np.array(x, dtype=np.float64)
+    xx_for_correction = np.float64(xx_for_correction)
+    x0_for_correction = np.float64(x0_for_correction)
+
     x_odd = x[0:T-2:2]
     x_odd_fwd = x[2:T:2]
     x_even = x[1:T-1:2]
 
     # Within transformation
-    x_odd_tilde = x_odd - np.mean(x_odd)
-    x_even_tilde = x_even - np.mean(x_even)
+    x_odd_tilde = x_odd - np.mean(x_odd, dtype=np.float64)
+    x_even_tilde = x_even - np.mean(x_even, dtype=np.float64)
 
     numer = (np.dot(x_odd_tilde, x_even) + np.dot(x_even_tilde, x_odd_fwd)
              + 4/(T-1) * xx_for_correction - 4/(T-1) * x0_for_correction)
