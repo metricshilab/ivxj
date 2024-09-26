@@ -23,7 +23,11 @@ def ivxj(y, x, rhoz, Tlens):
         se: float, standard error of betaHat
         rhoHat: float, estimated rho
     """
-
+    # Ensure everything is in float64 for consistency
+    y = np.array(y, dtype=np.float64)
+    x = np.array(x, dtype=np.float64)
+    rhoz = np.float64(rhoz)
+    Tlens = Tlens.astype(int)
     # Estimate rho
     # rhoHat = xdiff_unbalanced(x, Tlens)
     rhoHat = xjackk_unbalanced(x, Tlens)
