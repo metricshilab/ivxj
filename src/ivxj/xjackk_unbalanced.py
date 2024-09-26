@@ -21,8 +21,6 @@ def xjackk_unbalanced(xlong, Tlens):
     end_indices = np.cumsum(Tlens)
     start_indices = np.concatenate(([0], end_indices[:-1]))
 
-    numer_sum = 0
-    denom_sum = 0
     numers = []
     denoms = []
 
