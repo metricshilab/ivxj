@@ -34,6 +34,10 @@ def gen_ivx_for_one_time_series(x, rhoz):
     Returns:
         z: 1D array-like, the generated IVX for the time series
     """
+    # Ensure everything is in float64 for consistency
+    x = np.array(x, dtype=np.float64)
+    rhoz = np.float64(rhoz)
+
     T = len(x)
 
     dx = np.diff(x)

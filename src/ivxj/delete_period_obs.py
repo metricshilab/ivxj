@@ -15,6 +15,9 @@ def delete_period_obs(A, Tlens, h, fromStart=True):
     Returns:
         B: 2D array-like, the matrix after deleting h observations
     """
+    # Ensure everything is in float64 for consistency
+    A = np.array(A, dtype=np.float64)
+
     # Split A into submatrices according to Tlens
     subMatList = split_mat_into_cells(A, Tlens)
 
