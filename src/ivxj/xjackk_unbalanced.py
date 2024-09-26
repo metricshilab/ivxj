@@ -11,6 +11,8 @@ def xjackk_unbalanced(xlong, Tlens):
     Returns:
         rho_hat: float, the estimated rho
     """
+    # Ensure everything is in float64 for consistency
+    xlong = np.array(xlong, dtype=np.float64)
 
     xlong = xlong.flatten()    # must be a long column vector
     Tlens = Tlens.flatten()    # must be a row vector
@@ -21,6 +23,8 @@ def xjackk_unbalanced(xlong, Tlens):
 
     numer_sum = 0
     denom_sum = 0
+    numers = []
+    denoms = []
 
     for i in range(n):
         # If the time length of the current cross-section is less than 4, skip to the next
@@ -42,10 +46,10 @@ def xjackk_unbalanced(xlong, Tlens):
             # If T is even, delete the first observation
             numer, denom = xjackk_for_odd_time_len(x[1:], xx_for_correction, x0_for_correction)
 
-        numer_sum += numer
-        denom_sum += denom
+        numers.append(numer)
+        denoms.append(denom)
 
-    rho_hat = numer_sum / denom_sum
+    rho_hat = np.sum(numers) / np.sum(denoms)
 
     return rho_hat
 
