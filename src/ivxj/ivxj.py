@@ -9,20 +9,34 @@ from ivxj.within_trans import within_trans
 
 def ivxj(y, x, rhoz, Tlens):
     """
-    IVXD for univariate case, allowing for unbalanced panel.
-    
-    Parameters:
-        y: array-like, (y_1, ..., y_i, ..., y_n)'
-        x: array-like, (x_1, ..., x_i, ..., x_n)'
-        rhoz: float, parameter for IVX generation
-        Tlens: array-like, (T_1, ..., T_i, ..., T_n)
+    Compute IVXJ estimates for unbalanced panel data in the univariate case.
 
-    Returns:
-        btaHat: float, estimated beta
-        btaHatDebias: float, debiased beta estimate
-        se: float, standard error of betaHat
-        rhoHat: float, estimated rho
+    This function calculates IVXJ estimates using other helper functions in the package.
+    It is designed to handle unbalanced panel data with different time lengths for each individual.
+
+    Parameters
+    ----------
+    y : array-like of shape (n_total,), dtype=float64
+        Dependent variable, a stacked column vector of all individuals: (y_1, ..., y_n).
+    x : array-like of shape (n_total,), dtype=float64
+        Regressor, a stacked column vector of all individuals: (x_1, ..., x_n)'.
+    rhoz : float
+        User-defined IVX parameter (rho_z) for IVX generation.
+    Tlens : array-like of shape (n,), dtype=int
+        Vector of individual time lengths: (T_1, ..., T_n).
+
+    Returns
+    -------
+    btaHat : float
+        IVX estimate of the coefficient beta.
+    btaHatDebias : float
+        Debiased IVXJ estimate of the coefficient beta.
+    se : float
+        Standard error of the estimate.
+    rhoHat : float
+        XJ estimate of rho.
     """
+
     # Ensure everything is in float64 for consistency
     y = np.array(y, dtype=np.float64)
     x = np.array(x, dtype=np.float64)
@@ -67,11 +81,19 @@ def ivxj(y, x, rhoz, Tlens):
     omg12Hat = np.dot(vTilde.flatten(), uTilde.flatten()) / obs_total
 
     # Estimate of Nickell bias
-    lam_seq = ((rhoz - rhoz**Tlens) / (1 - rhoz) - (rhoHat - rhoHat**Tlens) / (1 - rhoHat)) / (rhoz - rhoHat)
+    lam_seq = (
+        (rhoz - rhoz**Tlens) / (1 - rhoz) - (rhoHat - rhoHat**Tlens) / (1 - rhoHat)
+    ) / (rhoz - rhoHat)
     b = omg12Hat * np.sum(lam_seq / Tlens) / ZX
 
     # Standard error of betaHat
-    se = np.sqrt(omg11Hat * (np.dot(zLag.flatten(), zLag.flatten()) - (rhoHat >= 1) * sum_of_mean_sq(zLag, Tlens))) / abs(ZX)
+    se = np.sqrt(
+        omg11Hat
+        * (
+            np.dot(zLag.flatten(), zLag.flatten())
+            - (rhoHat >= 1) * sum_of_mean_sq(zLag, Tlens)
+        )
+    ) / abs(ZX)
 
     # Debiased beta
     btaHatDebias = btaHat + b
@@ -84,5 +106,5 @@ def sum_of_mean_sq(A, Tlens):
     Sum of within mean squares for unbalanced panel.
     """
     subMatList = split_mat_into_cells(A, Tlens)
-    B = np.sum([np.mean(x)**2 for x in subMatList] * (Tlens**0.95))
+    B = np.sum([np.mean(x) ** 2 for x in subMatList] * (Tlens**0.95))
     return B
