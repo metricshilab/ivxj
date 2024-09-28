@@ -2,15 +2,25 @@ import numpy as np
 
 def xjackk_unbalanced(xlong, Tlens):
     """
-    X-jackknife for panel AR(1), allowing for unbalanced panel.
-    
-    Parameters:
-        xlong: array-like, (x_1, ..., x_i, ..., x_n)'
-        Tlens: array-like, (T_1, ..., T_i, ..., T_n)
+    Compute the XJ estimate for unbalanced panel data with a single regressor.
 
-    Returns:
-        rho_hat: float, the estimated rho
+    This function applies the X-jackknife method to panel data following an AR(1) 
+    process, allowing for unbalanced panels where individuals may have different time 
+    lengths.
+
+    Parameters
+    ----------
+    xlong : array-like of shape (n_total,), dtype=float64
+        Stacked column vector of the regressor for all individuals: (x_1, ..., x_n)'.
+    Tlens : array-like of shape (n,), dtype=int
+        Vector of individual time lengths: (T_1, ..., T_n).
+
+    Returns
+    -------
+    rho_hat : float
+        The XJ estimate of the AR(1) coefficient rho.
     """
+
     # Ensure everything is in float64 for consistency
     xlong = np.array(xlong, dtype=np.float64)
 
