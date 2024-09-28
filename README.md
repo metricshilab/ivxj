@@ -25,7 +25,7 @@ import ivxj
 y = dependent_variable       # Dependent variable, a stacked column vector
 x = independent_variable     # Regressor, a stacked column vector
 rhoz = ivx_parameter         # User-defined IVX parameter (ρ_z)
-Tlens = length_vector        # A vector recording the lengths of the individual column vectors in y and x
+Tlens = length_vector        # A vector of length $n$, with $T_i$ being the element.
 
 # Call the ivxj function to get the estimates
 btaHat, btaHatDebias, se, rhoHat = ivxj.ivxj(y, x, rhoz, Tlens)
@@ -37,14 +37,9 @@ btaHat, btaHatDebias, se, rhoHat = ivxj.ivxj(y, x, rhoz, Tlens)
 # - rhoHat: XJ estimate of ρ
 ```
 
-## Contributing
-
-Interested in contributing? Check out the contributing guidelines. Please note that this project is released with a Code of Conduct. By contributing to this project, you agree to abide by its terms.
 
 ## License
 
-`ivxj` was created by Ji Pan. It is licensed under the terms of the MIT license.
+`ivxj` is contributed by Ji Pan and Chengwang Liao. 
 
-## Credits
-
-`ivxj` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
+It is licensed under the terms of the MIT license.
