@@ -1,6 +1,6 @@
 # ivxj
 
-Compute IVXJ estimates for unbalanced panel data under univariate case!
+Compute IVXJ estimates for unbalanced panel data under univariate case. You can find the documentation [here](https://ivxj.readthedocs.io/en/latest/index.html).
 
 ## Installation
 
@@ -40,6 +40,6 @@ btaHat, btaHatDebias, se, rhoHat = ivxj.ivxj(y, x, rhoz, Tlens)
 
 ## License
 
-`ivxj` is contributed by Ji Pan and Chengwang Liao. 
+`ivxj` is contributed by [Ji Pan](https://github.com/PanJi-0) and [Chengwang Liao](https://github.com/cwleo).
 
 It is licensed under the terms of the MIT license.
