@@ -5,7 +5,7 @@ Compute IVXJ estimates for unbalanced panel data under univariate case!
 ## Installation
 
 ```bash
-$ pip install ivxj
+$ pip install git+https://github.com/metricshilab/ivxj.git
 ```
 
 ## Usage
