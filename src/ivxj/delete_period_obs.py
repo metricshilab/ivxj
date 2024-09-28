@@ -2,12 +2,13 @@ import numpy as np
 
 from ivxj.split_mat_into_cells import split_mat_into_cells
 
+
 def delete_period_obs(A, Tlens, h, fromStart=True):
     """
     Delete `h` observations from the start or end of each submatrix.
 
-    This function removes the first `h` observations from each submatrix in unbalanced 
-    panel data to create a lag effect. If `fromStart` is set to `False`, the function 
+    This function removes the first `h` observations from each submatrix in unbalanced
+    panel data to create a lag effect. If `fromStart` is set to `False`, the function
     will delete the last `h` observations instead.
 
     Parameters
@@ -19,7 +20,8 @@ def delete_period_obs(A, Tlens, h, fromStart=True):
     h : int
         The number of observations to delete from each submatrix.
     fromStart : bool, default=True
-        If `True`, delete the first `h` observations; if `False`, delete the last `h` observations.
+        If `True`, delete the first `h` observations; if `False`, delete the last `h`
+        observations.
 
     Returns
     -------
