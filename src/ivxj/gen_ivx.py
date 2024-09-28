@@ -4,16 +4,25 @@ from ivxj.split_mat_into_cells import split_mat_into_cells
 
 def gen_ivx(x, rhoz, Tlens):
     """
-    Generate IVX from unbalanced panel x = (x_1, ..., x_i, ..., x_n)'.
-    
-    Parameters:
-        x: 2D array-like, the full dataset (panel data)
-        rhoz: float, parameter for IVX generation
-        Tlens: 1D array-like, the length of each submatrix
+    Generate Instrumental Variables for X (IVX) from unbalanced panel data.
 
-    Returns:
-        zta: 2D array-like, the generated IVX for the full dataset
+    This function generates the IVX tool variables for unbalanced panel data, where the dataset consists of multiple submatrices (x_1, ..., x_n) with varying lengths.
+
+    Parameters
+    ----------
+    x : 2D array-like, dtype=float64
+        The full dataset as a panel of stacked submatrices.
+    rhoz : float
+        Parameter used for generating the IVX.
+    Tlens : 1D array-like, dtype=int
+        The lengths of each submatrix (individual time series) in the panel.
+
+    Returns
+    -------
+    zta : 2D array-like, dtype=float64
+        The generated IVX tool variables for the full dataset.
     """
+
     # Split x into submatrices according to Tlens
     subMatList = split_mat_into_cells(x, Tlens)
     
@@ -25,15 +34,23 @@ def gen_ivx(x, rhoz, Tlens):
 
 def gen_ivx_for_one_time_series(x, rhoz):
     """
-    Generate IVX for one time series (column vector).
-    
-    Parameters:
-        x: 1D array-like, the time series
-        rhoz: float, parameter for IVX generation
+    Generate Instrumental Variables for X (IVX) for a single time series.
 
-    Returns:
-        z: 1D array-like, the generated IVX for the time series
+    This function generates the IVX tool variable for a given time series, based on the specified IVX generation parameter.
+
+    Parameters
+    ----------
+    x : 1D array-like, dtype=float64
+        The input time series as a column vector.
+    rhoz : float
+        Parameter used for generating the IVX.
+
+    Returns
+    -------
+    z : 1D array-like, dtype=float64
+        The generated IVX tool variable for the input time series.
     """
+
     # Ensure everything is in float64 for consistency
     x = np.array(x, dtype=np.float64)
     rhoz = np.float64(rhoz)
