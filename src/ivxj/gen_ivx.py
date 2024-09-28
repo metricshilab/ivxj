@@ -2,11 +2,13 @@ import numpy as np
 
 from ivxj.split_mat_into_cells import split_mat_into_cells
 
+
 def gen_ivx(x, rhoz, Tlens):
     """
     Generate Instrumental Variables for X (IVX) from unbalanced panel data.
 
-    This function generates the IVX tool variables for unbalanced panel data, where the dataset consists of multiple submatrices (x_1, ..., x_n) with varying lengths.
+    This function generates the IVX tool variables for unbalanced panel data, where the
+    dataset consists of multiple submatrices (x_1, ..., x_n) with varying lengths.
 
     Parameters
     ----------
@@ -25,7 +27,7 @@ def gen_ivx(x, rhoz, Tlens):
 
     # Split x into submatrices according to Tlens
     subMatList = split_mat_into_cells(x, Tlens)
-    
+
     # Generate IVX for each submatrix
     zta = np.concatenate([gen_ivx_for_one_time_series(xt, rhoz) for xt in subMatList])
 
@@ -36,7 +38,8 @@ def gen_ivx_for_one_time_series(x, rhoz):
     """
     Generate Instrumental Variables for X (IVX) for a single time series.
 
-    This function generates the IVX tool variable for a given time series, based on the specified IVX generation parameter.
+    This function generates the IVX tool variable for a given time series, based on the
+    specified IVX generation parameter.
 
     Parameters
     ----------
@@ -58,9 +61,9 @@ def gen_ivx_for_one_time_series(x, rhoz):
     T = len(x)
 
     dx = np.diff(x)
-    dx = np.insert(dx, 0, x[0]) # First difference, with dx_1 = x_1
-    powers = rhoz ** np.arange(T-1, -1, -1)
-  
+    dx = np.insert(dx, 0, x[0])  # First difference, with dx_1 = x_1
+    powers = rhoz ** np.arange(T - 1, -1, -1)
+
     z = np.cumsum(powers * dx) / powers
 
     return z
