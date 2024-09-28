@@ -64,16 +64,26 @@ def xjackk_unbalanced(xlong, Tlens):
 
 def xjackk_for_odd_time_len(x, xx_for_correction, x0_for_correction):
     """
-    Auxiliary function to handle odd time lengths.
-    
-    Parameters:
-        x: array-like, the time series
-        xx_for_correction: float, correction term
-        x0_for_correction: float, correction term
+    Auxiliary function to handle time series with odd lengths.
 
-    Returns:
-        numer: float, numerator for rho_hat calculation
-        denom: float, denominator for rho_hat calculation
+    This function adjusts calculations when the time series length is odd, using 
+    correction terms to ensure accurate estimation of the AR(1) coefficient.
+
+    Parameters
+    ----------
+    x : array-like, dtype=float64
+        The time series data.
+    xx_for_correction : float
+        Correction term applied to adjust for odd-length series in the calculation.
+    x0_for_correction : float
+        Additional correction term for adjustment in the calculation.
+
+    Returns
+    -------
+    numer : float
+        Numerator used in the calculation of rho_hat.
+    denom : float
+        Denominator used in the calculation of rho_hat.
     """
 
     T = len(x)
