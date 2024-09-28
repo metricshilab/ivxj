@@ -12,7 +12,8 @@ def ivxj(y, x, rhoz, Tlens):
     Compute IVXJ estimates for unbalanced panel data in the univariate case.
 
     This function calculates IVXJ estimates using other helper functions in the package.
-    It is designed to handle unbalanced panel data with different time lengths for each individual.
+    It is designed to handle unbalanced panel data with different time lengths for each
+    individual.
 
     Parameters
     ----------
@@ -42,8 +43,8 @@ def ivxj(y, x, rhoz, Tlens):
     x = np.array(x, dtype=np.float64)
     rhoz = np.float64(rhoz)
     Tlens = Tlens.astype(int)
+
     # Estimate rho
-    # rhoHat = xdiff_unbalanced(x, Tlens)
     rhoHat = xjackk_unbalanced(x, Tlens)
 
     # Lost one period due to lag
