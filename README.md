@@ -40,6 +40,6 @@ btaHat, btaHatDebias, se, rhoHat = ivxj.ivxj(y, x, rhoz, Tlens)
 
 ## License
 
-`ivxj` is contributed by Ji Pan and Chengwang Liao. 
+`ivxj` is contributed by [Ji Pan](https://github.com/PanJi-0) and [Chengwang Liao](https://github.com/cwleo).
 
 It is licensed under the terms of the MIT license.
