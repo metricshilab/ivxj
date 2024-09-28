@@ -1,6 +1,6 @@
 # ivxj
 
-Compute IVXJ estimates for unbalanced panel data under univariate case!
+Compute IVXJ estimates for unbalanced panel data under univariate case. You can find the documentation [here](https://ivxj.readthedocs.io/en/latest/index.html).
 
 ## Installation
 
