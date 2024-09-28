@@ -4,15 +4,26 @@ from ivxj.split_mat_into_cells import split_mat_into_cells
 
 def within_trans(A, Tlens):
     """
-    Perform within transformation for unbalanced panel data.
-    
-    Parameters:
-        A: 2D array-like, the full dataset (panel data)
-        Tlens: 1D array-like, the length of each submatrix
+    Perform within-group transformation for unbalanced panel data.
 
-    Returns:
-        B: 2D array-like, the dataset after within transformation
+    This function applies a within-group transformation to unbalanced panel data by 
+    removing individual-specific means from each submatrix.
+
+    Parameters
+    ----------
+    A : 2D array-like, dtype=float64
+        The full dataset, represented as a panel of stacked submatrices (one for each 
+        individual).
+    Tlens : 1D array-like, dtype=int
+        The lengths of each submatrix (individual time series) in the panel.
+
+    Returns
+    -------
+    B : 2D array-like, dtype=float64
+        The dataset after applying the within-group transformation, with 
+        individual-specific means removed.
     """
+
     # Ensure everything is in float64 for consistency
     A = np.array(A, dtype=np.float64)
     
