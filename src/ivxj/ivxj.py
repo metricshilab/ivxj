@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 from ivxj.split_mat_into_cells import split_mat_into_cells
 from ivxj.xjackk_unbalanced import xjackk_unbalanced
@@ -6,8 +7,30 @@ from ivxj.delete_period_obs import delete_period_obs
 from ivxj.gen_ivx import gen_ivx
 from ivxj.within_trans import within_trans
 
+def ivxj(data, rhoz, identity_index=1, time_index=2, y_index=3):
+    # Get the column names at idendity_index and time_index
+    identity = data.columns[identity_index]
+    time = data.columns[time_index]
+        
+    # Sort the data by these columns
+    data_sorted = data.sort_values(by=[identity, time])
 
-def ivxj(y, x, rhoz, Tlens):
+    # get the y, x, Tlens
+    y = np.array(data_sorted[y_index].values, dtype=np.float64)
+
+    x_index = [i for i in [1, 2, 3, 4] if i not in [identity_index, time_index, y_index]]
+    x = np.array(data_sorted[x_index].values, dtype=np.float64)
+
+    # Group by 'identity' and count the number of occurrences
+    identity_counts = data_sorted.groupby('identity').size()
+
+    # Convert the result to a numpy array
+    Tlens = np.array(identity_counts.values, dtype=int)
+    btaHat, btaHatDebias, se, rhoHat = raw_ivxj(y, x, rhoz, Tlens)
+
+    return btaHat, btaHatDebias, se, rhoHat
+
+def raw_ivxj(y, x, rhoz, Tlens):
     """
     Compute IVXJ estimates for unbalanced panel data in the univariate case.
 
