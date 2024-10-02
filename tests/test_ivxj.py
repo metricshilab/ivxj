@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from ivxj.ivxj import raw_ivxj
 
-def test_ivxj():
+def test_raw_ivxj():
     """Test ivxj function using the paper data"""
     for h in range(1,4):
         for i in range(1,5):
