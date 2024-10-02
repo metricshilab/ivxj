@@ -10,33 +10,45 @@ $ pip install git+https://github.com/metricshilab/ivxj.git
 
 ## Usage
 
-`ivxj` can be used to compute the following estimates:
-- **IVX estimate**
-- **IVXJ estimate**
-- **Standard error**
-- **XJ-adjusted $\rho$ estimate**
+The `ivxj` function is designed to compute key estimates for unbalanced panel data analysis, including:
 
-Below is an example demonstrating how to use the package:
+- **IVX Estimate**: The estimated coefficients using the IVX method.
+- **IVXJ Estimate**: The debiased estimates from the IVXJ method.
+- **Standard Error**: The standard errors associated with the estimates.
+- **XJ-adjusted $\rho$ Estimate**: The adjusted estimate of $\rho$, reflecting the effects of the instruments.
+
+Here's a step-by-step example demonstrating how to use the `ivxj` package:
 
 ```python
+import pandas as pd
 import ivxj
 
-# Define the input variables
-y = dependent_variable       # Dependent variable, a stacked column vector
-x = independent_variable     # Regressor, a stacked column vector
-rhoz = ivx_parameter         # User-defined IVX parameter (ρ_z)
-Tlens = length_vector        # A vector of length $n$, with $T_i$ being the element.
+# Prepare your input data as a pandas DataFrame
+data = pd.DataFrame({
+    'id': [1, 1, 2, 2],
+    'time': [1, 2, 1, 2],
+    'y': [2.5, 3.5, 4.5, 5.5],
+    'x': [1.1, 1.2, 2.1, 2.2]
+})
 
-# Call the ivxj function to get the estimates
-btaHat, btaHatDebias, se, rhoHat = ivxj.ivxj(y, x, rhoz, Tlens)
+# Define the user-defined IVX parameter (rho_z)
+rhoz = 0.9
 
-# Output:
-# - btaHat: IVX estimate
-# - btaHatDebias: IVXJ estimate
-# - se: Standard error
-# - rhoHat: XJ estimate of ρ
+# Optional: Specify column names for identity, time, y, and x
+identity = 'id'  # Column representing individual entities
+time = 'time'    # Column representing time periods
+y_name = 'y'     # Column representing the dependent variable
+x_name = 'x'     # Column representing the independent variable
+
+# Call the ivxj function to compute the estimates
+btaHat, btaHatDebias, se, rhoHat = ivxj.ivxj(data, rhoz, identity, time, y_name, x_name)
+
+# Output
+print("IVX Estimate (btaHat):", btaHat)
+print("IVXJ Estimate (btaHatDebias):", btaHatDebias)
+print("Standard Error (se):", se)
+print("XJ-adjusted rho Estimate (rhoHat):", rhoHat)
 ```
-
 
 ## License
 
