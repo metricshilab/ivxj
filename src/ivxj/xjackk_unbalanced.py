@@ -44,7 +44,7 @@ def xjackk_unbalanced(xlong, Tlens):
             start_indices[i] : end_indices[i]
         ]  # A column vector since xlong is a column vector
 
-        To = (T // 2) * 2 - 1  # Max odd number less than T
+        To = T if T % 2 else T - 1  # Max odd number less than or equal to T
         x_first_half = x[: (To - 1) // 2]
         x_first_half_fwd = x[1 : (To + 1) // 2]
         xx_for_correction = np.dot(x_first_half, x_first_half_fwd)
