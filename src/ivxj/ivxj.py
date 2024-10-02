@@ -7,28 +7,92 @@ from ivxj.delete_period_obs import delete_period_obs
 from ivxj.gen_ivx import gen_ivx
 from ivxj.within_trans import within_trans
 
-def ivxj(data, rhoz, identity_index=0, time_index=1, y_index=2):
-    # Get the column names at idendity_index and time_index
-    identity = data.columns[identity_index]
-    time = data.columns[time_index]
+def ivxj(data, rhoz, identity=None, time=None, y_name=None, x_name=None):
+    """
+    Perform IVXJ estimation on unbalanced panel data in the univariate case.
+
+    This function sorts panel data, extracts dependent and independent variables,
+    and applies the IVXJ estimation method, returning the IVX and the IVXJ estimate of 
+    coefficient, the standard error, and the XJ estimate of rho.
+
+    Parameters
+    ----------
+    data : pandas.DataFrame
+        A DataFrame containing the unbalanced panel data.
+    rhoz : float
+        User-defined IVX parameter (rho_z)
+    identity : str, optional
+        Column name in `data` representing the individual entity (cross-sectional unit).
+        If None, the first column of `data` is used.
+    time : str, optional
+        Column name in `data` representing the time dimension.
+        If None, the second column of `data` is used.
+    y_name : str, optional
+        Column name in `data` representing the dependent variable.
+        If None, the third column of `data` is used.
+    x_name : str, optional
+        Column name in `data` representing the independent variable.
+        If None, the fourth column of `data` is used.
+
+    Returns
+    -------
+    btaHat : np.ndarray
+        IVX estimate of the coefficient.
+    btaHatDebias : np.ndarray
+        IVXJ estimate the coefficient.
+    se : np.ndarray
+        Standard error.
+    rhoHat : float
+        XJ estimate of rho.
+
+    Raises
+    ------
+    KeyError
+        If the specified column names do not exist in the DataFrame.
+    ValueError
+        If `data` does not have enough columns for the default assignment of variables.
+
+    Examples
+    --------
+    >>> import pandas as pd
+    >>> data = pd.DataFrame({
+    ...     'id': [1, 1, 2, 2],
+    ...     'time': [1, 2, 1, 2],
+    ...     'y': [2.5, 3.5, 4.5, 5.5],
+    ...     'x': [1.1, 1.2, 2.1, 2.2]
+    ... })
+    >>> rhoz = 0.9
+    >>> ivxj(data, rhoz, 'id', 'time', 'y', 'x')
+    (np.float64(...),
+    np.float64(...),
+    np.float64(...),
+    np.float64(...))
+    """
+    # Default to first columns if no identity, time, y, x names are provided
+    if identity is None and time is None and y_name is None and x_name is None:
+        identity = data.columns[0]
+        time = data.columns[1]
+        y_name = data.columns[2]
+        x_name = data.columns[3]
         
-    # Sort the data by these columns
+    # Sort the data by identity and time columns
     data_sorted = data.sort_values(by=[identity, time])
 
-    # get the y, x, Tlens
-    y = data_sorted.iloc[:, y_index].to_numpy(dtype=np.float64)
+    # Extract y (dependent variable) and x (independent variable) as numpy arrays
+    y = data_sorted[y_name].to_numpy(dtype=np.float64)
+    x = data_sorted[x_name].to_numpy(dtype=np.float64)
 
-    x_index = [i for i in [0, 1, 2, 3] if i not in [identity_index, time_index, y_index]]
-    x = data_sorted.iloc[:, x_index[0]].to_numpy(dtype=np.float64)
-
-    # Group by 'identity' and count the number of occurrences
+    # Group by 'identity' and count occurrences (Tlens is the number of time periods for each entity)
     identity_counts = data_sorted.groupby(identity).size()
 
-    # Convert the result to a numpy array
+    # Convert counts to a numpy array (Tlens)
     Tlens = np.array(identity_counts.values, dtype=int)
+
+    # Call raw_ivxj to perform the IVX-J estimation
     btaHat, btaHatDebias, se, rhoHat = raw_ivxj(y, x, rhoz, Tlens)
 
     return btaHat, btaHatDebias, se, rhoHat
+
 
 def raw_ivxj(y, x, rhoz, Tlens):
     """
