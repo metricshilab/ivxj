@@ -7,12 +7,13 @@ from ivxj.delete_period_obs import delete_period_obs
 from ivxj.gen_ivx import gen_ivx
 from ivxj.within_trans import within_trans
 
+
 def ivxj(data, rhoz, identity=None, time=None, y_name=None, x_name=None):
     """
     Perform IVXJ estimation on unbalanced panel data in the univariate case.
 
     This function sorts panel data, extracts dependent and independent variables,
-    and applies the IVXJ estimation method, returning the IVX and the IVXJ estimate of 
+    and applies the IVXJ estimation method, returning the IVX and the IVXJ estimate of
     coefficient, the standard error, and the XJ estimate of rho.
 
     Parameters
@@ -74,7 +75,7 @@ def ivxj(data, rhoz, identity=None, time=None, y_name=None, x_name=None):
         time = data.columns[1]
         y_name = data.columns[2]
         x_name = data.columns[3]
-        
+
     # Sort the data by identity and time columns
     data_sorted = data.sort_values(by=[identity, time])
 
@@ -82,13 +83,14 @@ def ivxj(data, rhoz, identity=None, time=None, y_name=None, x_name=None):
     y = data_sorted[y_name].to_numpy(dtype=np.float64)
     x = data_sorted[x_name].to_numpy(dtype=np.float64)
 
-    # Group by 'identity' and count occurrences (Tlens is the number of time periods for each entity)
+    # Group by 'identity' and count occurrences (Tlens is the number of time periods for 
+    # each entity)
     identity_counts = data_sorted.groupby(identity).size()
 
     # Convert counts to a numpy array (Tlens)
     Tlens = np.array(identity_counts.values, dtype=int)
 
-    # Call raw_ivxj to perform the IVX-J estimation
+    # Call raw_ivxj to perform the IVXJ estimation
     btaHat, btaHatDebias, se, rhoHat = raw_ivxj(y, x, rhoz, Tlens)
 
     return btaHat, btaHatDebias, se, rhoHat
