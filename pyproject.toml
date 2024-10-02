@@ -2,7 +2,7 @@
 name = "ivxj"
 version = "0.1.0"
 description = "Compute IVXJ estimates for unbalanced panel data under univariate case!"
-authors = ["Ji Pan"]
+authors = ["Ji Pan", "Chengwang Liao"]
 license = "MIT"
 readme = "README.md"
 
