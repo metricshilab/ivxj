@@ -1,6 +1,16 @@
 # ivxj
 
-Compute IVXJ estimates for unbalanced panel data under univariate case. You can find the documentation [here](https://ivxj.readthedocs.io/en/latest/index.html).
+## Introduction
+
+This repository hosts a Python package to implement the IVXJ procedure in 
+
+* Liao, Mei and Shi (2024): ``Nickell Meets Stambaugh: A Tale of Two Biases in Panel Predictive Regressions'' [arXiv-link]
+
+At this current status, it computes the IVXJ estimates and the corresponding $t$-statistics for unbalanced panel data under a simple regression specification. It is sufficient to replicate the empirical application in the paper.
+
+Multivariate regression and long-horizon predictions will be subsumed in future versions.
+
+Documentation is provided here [here](https://ivxj.readthedocs.io/en/latest/index.html).
 
 ## Installation
 
@@ -10,7 +20,7 @@ $ pip install git+https://github.com/metricshilab/ivxj.git
 
 ## Usage
 
-The `ivxj` function is designed to compute key estimates for unbalanced panel data analysis, including:
+This main function of this package is `ivxj`. It compute key estimates for unbalanced panel data analysis, including:
 
 - **IVX Estimate**: The estimated coefficients using the IVX method.
 - **IVXJ Estimate**: The debiased estimates from the IVXJ method.
