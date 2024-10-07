@@ -68,15 +68,9 @@ def ivxj(data, rhoz, identity=None, time=None, y_name=None, x_name=None):
 
     >>> ivxj(data, rhoz)
 
-    See Also
-    --------
-    - `pandas.DataFrame`: Structure used to store the panel data.
-    - `numpy.ndarray`: Structure used for the return values.
-    - IVX Estimation Methodology (for details on the IVX estimation technique).
-
     References
     ----------
-    For more details on the IVXJ method, see the original paper by [Author et al. (Year)].
+    For more details on the IVXJ method, see the original paper by Liao, Mei and Shi (2024).
     """
     # Default to first columns if no identity, time, y, x names are provided
     if identity is None and time is None and y_name is None and x_name is None:
