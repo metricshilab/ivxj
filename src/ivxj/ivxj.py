@@ -10,51 +10,49 @@ from ivxj.within_trans import within_trans
 
 def ivxj(data, rhoz, identity=None, time=None, y_name=None, x_name=None):
     """
-    Perform IVXJ estimation on unbalanced panel data in the univariate case.
+    IVXJ Estimation for Unbalanced Panel Data (Univariate Case).
 
-    This function sorts panel data, extracts dependent and independent variables,
-    and applies the IVXJ estimation method, returning the IVX and the IVXJ estimate of
-    coefficient, the standard error, and the XJ estimate of rho.
+    This function performs Instrumental Variable with XJ (IVXJ) estimation on unbalanced panel data in a univariate setting. It sorts the panel data, extracts dependent and independent variables, and applies the IVXJ method. The function returns the IVX and IVXJ estimates of the coefficient, the standard error, and the XJ estimate of rho.
+
+    The method is designed for use in unbalanced panel data, where the number of time periods may differ across individual entities.
 
     Parameters
     ----------
     data : pandas.DataFrame
-        A DataFrame containing the unbalanced panel data.
+        A DataFrame containing unbalanced panel data. It must include columns for an entity identifier, a time variable, and both dependent and independent variables.
     rhoz : float
-        User-defined IVX parameter (rho_z)
+        A user-defined IVX parameter, denoted as rho_z, controlling the strength of persistence in the instruments.
     identity : str, optional
-        Column name in `data` representing the individual entity (cross-sectional unit).
-        If None, the first column of `data` is used.
+        The name of the column in `data` representing the individual entity (cross-sectional unit). If None, the first column of `data` is used as the identity column.
     time : str, optional
-        Column name in `data` representing the time dimension.
-        If None, the second column of `data` is used.
+        The name of the column in `data` representing the time dimension. If None, the second column of `data` is used as the time variable.
     y_name : str, optional
-        Column name in `data` representing the dependent variable.
-        If None, the third column of `data` is used.
+        The name of the column in `data` representing the dependent variable. If None, the third column of `data` is used as the dependent variable.
     x_name : str, optional
-        Column name in `data` representing the independent variable.
-        If None, the fourth column of `data` is used.
+        The name of the column in `data` representing the independent variable. If None, the fourth column of `data` is used as the independent variable.
 
     Returns
     -------
-    btaHat : np.ndarray
-        IVX estimate of the coefficient.
-    btaHatDebias : np.ndarray
-        IVXJ estimate the coefficient.
-    se : np.ndarray
-        Standard error.
+    btaHat : numpy.ndarray
+        The IVX estimate of the coefficient.
+    btaHatDebias : numpy.ndarray
+        The IVXJ estimate of the coefficient.
+    se : numpy.ndarray
+        The standard error of the IVXJ estimate.
     rhoHat : float
-        XJ estimate of rho.
+        The XJ estimate of rho.
 
     Raises
     ------
     KeyError
-        If the specified column names do not exist in the DataFrame.
+        If the specified column names for identity, time, y, or x do not exist in the `data` DataFrame.
     ValueError
-        If `data` does not have enough columns for the default assignment of variables.
+        If the `data` does not contain enough columns to assign variables when default column indices are used.
 
     Examples
     --------
+    Example 1: Applying IVXJ to an unbalanced panel dataset
+
     >>> import pandas as pd
     >>> data = pd.DataFrame({
     ...     'id': [1, 1, 1, 2, 2, 2],
@@ -63,68 +61,22 @@ def ivxj(data, rhoz, identity=None, time=None, y_name=None, x_name=None):
     ...     'x': [1.1, 1.2, 1.3, 2.1, 2.2, 2.3]
     ... })
     >>> rhoz = 0.9
-    >>> ivxj(data, rhoz, 'id', 'time', 'y', 'x')
-    (np.float64(...),
-    np.float64(...),
-    np.float64(...),
-    np.float64(...))
-    """
-    # Default to first columns if no identity, time, y, x names are provided
-    if identity is None and time is None and y_name is None and x_name is None:
-        identity = data.columns[0]
-        time = data.columns[1]
-        y_name = data.columns[2]
-        x_name = data.columns[3]
+    >>> btaHat, btaHatDebias, se, rhoHat = ivxj(data, rhoz, 'id', 'time', 'y', 'x')
+    >>> print(btaHat, btaHatDebias, se, rhoHat)
 
-    # Sort the data by identity and time columns
-    data_sorted = data.sort_values(by=[identity, time])
+    Example 2: Using default columns for entity, time, dependent, and independent variables
 
-    # Extract y (dependent variable) and x (independent variable) as numpy arrays
-    y = data_sorted[y_name].to_numpy(dtype=np.float64)
-    x = data_sorted[x_name].to_numpy(dtype=np.float64)
+    >>> ivxj(data, rhoz)
 
-    # Group by 'identity' and count occurrences (Tlens is the number of time periods for 
-    # each entity)
-    identity_counts = data_sorted.groupby(identity).size()
+    See Also
+    --------
+    - `pandas.DataFrame`: Structure used to store the panel data.
+    - `numpy.ndarray`: Structure used for the return values.
+    - IVX Estimation Methodology (for details on the IVX estimation technique).
 
-    # Convert counts to a numpy array (Tlens)
-    Tlens = np.array(identity_counts.values, dtype=int)
-
-    # Call raw_ivxj to perform the IVXJ estimation
-    btaHat, btaHatDebias, se, rhoHat = raw_ivxj(y, x, rhoz, Tlens)
-
-    return btaHat, btaHatDebias, se, rhoHat
-
-
-def raw_ivxj(y, x, rhoz, Tlens):
-    """
-    Compute IVXJ estimates for unbalanced panel data in the univariate case.
-
-    This function calculates IVXJ estimates using other helper functions in the package.
-    It is designed to handle unbalanced panel data with different time lengths for each
-    individual.
-
-    Parameters
+    References
     ----------
-    y : array-like of shape (n_total,), dtype=float64
-        Dependent variable, a stacked column vector of all individuals: (y_1, ..., y_n).
-    x : array-like of shape (n_total,), dtype=float64
-        Regressor, a stacked column vector of all individuals: (x_1, ..., x_n)'.
-    rhoz : float
-        User-defined IVX parameter (rho_z) for IVX generation.
-    Tlens : array-like of shape (n,), dtype=int
-        Vector of individual time lengths: (T_1, ..., T_n).
-
-    Returns
-    -------
-    btaHat : float
-        IVX estimate of the coefficient beta.
-    btaHatDebias : float
-        Debiased IVXJ estimate of the coefficient beta.
-    se : float
-        Standard error of the estimate.
-    rhoHat : float
-        XJ estimate of rho.
+    For more details on the IVXJ method, see the original paper by [Author et al. (Year)].
     """
 
     # Ensure everything is in float64 for consistency
