@@ -78,6 +78,63 @@ def ivxj(data, rhoz, identity=None, time=None, y_name=None, x_name=None):
     ----------
     For more details on the IVXJ method, see the original paper by [Author et al. (Year)].
     """
+    # Default to first columns if no identity, time, y, x names are provided
+    if identity is None and time is None and y_name is None and x_name is None:
+        identity = data.columns[0]
+        time = data.columns[1]
+        y_name = data.columns[2]
+        x_name = data.columns[3]
+
+    # Sort the data by identity and time columns
+    data_sorted = data.sort_values(by=[identity, time])
+
+    # Extract y (dependent variable) and x (independent variable) as numpy arrays
+    y = data_sorted[y_name].to_numpy(dtype=np.float64)
+    x = data_sorted[x_name].to_numpy(dtype=np.float64)
+
+    # Group by 'identity' and count occurrences (Tlens is the number of time periods for
+    # each entity)
+    identity_counts = data_sorted.groupby(identity).size()
+
+    # Convert counts to a numpy array (Tlens)
+    Tlens = np.array(identity_counts.values, dtype=int)
+
+    # Call raw_ivxj to perform the IVXJ estimation
+    btaHat, btaHatDebias, se, rhoHat = raw_ivxj(y, x, rhoz, Tlens)
+
+    return btaHat, btaHatDebias, se, rhoHat
+
+
+def raw_ivxj(y, x, rhoz, Tlens):
+    """
+    Compute IVXJ estimates for unbalanced panel data in the univariate case.
+
+    This function calculates IVXJ estimates using other helper functions in the package.
+    It is designed to handle unbalanced panel data with different time lengths for each
+    individual.
+
+    Parameters
+    ----------
+    y : array-like of shape (n_total,), dtype=float64
+        Dependent variable, a stacked column vector of all individuals: (y_1, ..., y_n).
+    x : array-like of shape (n_total,), dtype=float64
+        Regressor, a stacked column vector of all individuals: (x_1, ..., x_n)'.
+    rhoz : float
+        User-defined IVX parameter (rho_z) for IVX generation.
+    Tlens : array-like of shape (n,), dtype=int
+        Vector of individual time lengths: (T_1, ..., T_n).
+
+    Returns
+    -------
+    btaHat : float
+        IVX estimate of the coefficient beta.
+    btaHatDebias : float
+        Debiased IVXJ estimate of the coefficient beta.
+    se : float
+        Standard error of the estimate.
+    rhoHat : float
+        XJ estimate of rho.
+    """
 
     # Ensure everything is in float64 for consistency
     y = np.array(y, dtype=np.float64)
