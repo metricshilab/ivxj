@@ -35,10 +35,10 @@ import ivxj
 
 # Prepare your input data as a pandas DataFrame
 data = pd.DataFrame({
-    'id': [1, 1, 2, 2],
-    'time': [1, 2, 1, 2],
-    'y': [2.5, 3.5, 4.5, 5.5],
-    'x': [1.1, 1.2, 2.1, 2.2]
+    'id': [1, 1, 1, 2, 2, 2],
+    'time': [1, 2, 3, 1, 2, 3],
+    'y': [0, 0, 1, 0, 0, 1],
+    'x': [1.1, 1.2, 1.3, 2.1, 2.2, 2.3]
 })
 
 # Define the user-defined IVX parameter (rho_z)

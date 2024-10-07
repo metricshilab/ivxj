@@ -57,10 +57,10 @@ def ivxj(data, rhoz, identity=None, time=None, y_name=None, x_name=None):
     --------
     >>> import pandas as pd
     >>> data = pd.DataFrame({
-    ...     'id': [1, 1, 2, 2],
-    ...     'time': [1, 2, 1, 2],
-    ...     'y': [2.5, 3.5, 4.5, 5.5],
-    ...     'x': [1.1, 1.2, 2.1, 2.2]
+    ...     'id': [1, 1, 1, 2, 2, 2],
+    ...     'time': [1, 2, 3, 1, 2, 3],
+    ...     'y': [0, 0, 1, 0, 0, 1],
+    ...     'x': [1.1, 1.2, 1.3, 2.1, 2.2, 2.3]
     ... })
     >>> rhoz = 0.9
     >>> ivxj(data, rhoz, 'id', 'time', 'y', 'x')
