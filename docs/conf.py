@@ -7,8 +7,8 @@
 # -- Project information -----------------------------------------------------
 
 project = u"ivxj"
-copyright = u"2024, Ji Pan"
-author = u"Ji Pan"
+copyright = u"2024, Ji Pan, Chengwang Liao"
+author = u"Ji Pan, Chengwang Liao"
 
 # -- General configuration ---------------------------------------------------
 
