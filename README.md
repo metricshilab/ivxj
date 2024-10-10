@@ -6,7 +6,7 @@ This repository hosts a Python package to implement the IVXJ procedure in
 
 * Liao, Mei and Shi (2024): "Nickell Meets Stambaugh: A Tale of Two Biases in Panel Predictive Regressions" [arXiv-link]
 
-At this current status, it computes the IVXJ estimates and the corresponding $t$-statistics for unbalanced panel data under a simple regression specification. It is sufficient to replicate the empirical application in the paper.
+At this current status, it computes the IVXJ estimates and the corresponding \\(t\\)-statistics for unbalanced panel data under a simple regression specification. It is sufficient to replicate the empirical application in the paper.
 
 Multivariate regression and long-horizon predictions will be subsumed in future versions.
 
@@ -25,7 +25,7 @@ The main function of this package is `ivxj`. It compute key estimates for unbala
 - **IVX Estimate**: The estimated coefficients using the IVX method.
 - **IVXJ Estimate**: The debiased estimates from the IVXJ method.
 - **Standard Error**: The standard errors associated with the estimates.
-- **XJ-adjusted $\rho$ Estimate**: The adjusted estimate of $\rho$, reflecting the effects of the instruments.
+- **XJ-adjusted \\(\rho\\) Estimate**: The adjusted estimate of \\(\rho\\), reflecting the effects of the instruments.
 
 Here's a step-by-step example demonstrating how to use the `ivxj` package:
 
