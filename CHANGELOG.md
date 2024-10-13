@@ -4,4 +4,4 @@
 
 ## v0.1.0 (24/09/2024)
 
-- First release of `ivxj`!
+- First release of `ivxj`.
