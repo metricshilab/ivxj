@@ -4,7 +4,7 @@
 
 This repository hosts a Python package to implement the IVXJ procedure in 
 
-* Liao, Mei and Shi (2024): "Nickell Meets Stambaugh: A Tale of Two Biases in Panel Predictive Regressions" [ResearchGate-link](http://dx.doi.org/10.13140/RG.2.2.35464.64004)
+* Liao, Mei and Shi (2024): "Nickell Meets Stambaugh: A Tale of Two Biases in Panel Predictive Regressions" [[ResearchGate-link]](http://dx.doi.org/10.13140/RG.2.2.35464.64004)
 
 At this current status, it computes the IVXJ estimates and the corresponding \\(t\\)-statistics for unbalanced panel data under a simple regression specification. It is sufficient to replicate the empirical application in the paper.
 
