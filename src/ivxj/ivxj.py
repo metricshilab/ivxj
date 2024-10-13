@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 from ivxj.split_mat_into_cells import split_mat_into_cells
-from ivxj.xjackk_unbalanced import xjackk_unbalanced
+from ivxj.xj import xj
 from ivxj.delete_period_obs import delete_period_obs
 from ivxj.gen_ivx import gen_ivx
 from ivxj.within_trans import within_trans
@@ -137,7 +137,7 @@ def raw_ivxj(y, x, rhoz, Tlens):
     Tlens = Tlens.astype(int)
 
     # Estimate rho
-    rhoHat = xjackk_unbalanced(x, Tlens)
+    rhoHat = xj(x, Tlens)
 
     # Lost one period due to lag
     y = delete_period_obs(y, Tlens, 1)
