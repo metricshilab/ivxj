@@ -55,10 +55,10 @@ def ivxj(data, rhoz, identity=None, time=None, y_name=None, x_name=None):
 
     >>> import pandas as pd
     >>> data = pd.DataFrame({
-    ...     'id': [1, 1, 1, 2, 2, 2],
-    ...     'time': [1, 2, 3, 1, 2, 3],
-    ...     'y': [0, 0, 1, 0, 0, 1],
-    ...     'x': [1.1, 1.2, 1.3, 2.1, 2.2, 2.3]
+    ...     'id': np.repeat([1, 2], 21),
+    ...     'time': np.tile(np.arange(1, 22), 2), 
+    ...     'y': np.random.randint(0, 2, 42), 
+    ...     'x': np.round(np.random.uniform(1, 3, 42), 1) 
     ... })
     >>> rhoz = 0.9
     >>> btaHat, btaHatDebias, se, rhoHat = ivxj(data, rhoz, 'id', 'time', 'y', 'x')

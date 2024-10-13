@@ -35,10 +35,10 @@ import ivxj
 
 # Prepare your input data as a pandas DataFrame
 data = pd.DataFrame({
-    'id': [1, 1, 1, 2, 2, 2],
-    'time': [1, 2, 3, 1, 2, 3],
-    'y': [0, 0, 1, 0, 0, 1],
-    'x': [1.1, 1.2, 1.3, 2.1, 2.2, 2.3]
+    'id': np.repeat([1, 2], 21),   # Two 'id's, 21 times each
+    'time': np.tile(np.arange(1, 22), 2),  # 'time' from 1 to 21 for each 'id'
+    'y': np.random.randint(0, 2, 42),  # Random binary values for 'y'
+    'x': np.round(np.random.uniform(1, 3, 42), 1)  # Random 'x' values between 1 and 3, rounded to 1 decimal place
 })
 
 # Define the user-defined IVX parameter (rho_z)
