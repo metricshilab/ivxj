@@ -34,7 +34,7 @@ import pandas as pd
 import numpy as np
 import ivxj
 
-# Prepare your input data as a pandas DataFrame
+# Prepare the input data as a pandas DataFrame
 data = pd.DataFrame({
     'id': np.repeat([1, 2], 21),   # Two 'id's, 21 times each
     'time': np.tile(np.arange(1, 22), 2),  # 'time' from 1 to 21 for each 'id'
