@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def xjackk_unbalanced(xlong, Tlens):
+def xj(xlong, Tlens):
     """
     Compute the XJ estimate for unbalanced panel data with a single regressor.
 
