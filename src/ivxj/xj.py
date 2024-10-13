@@ -35,7 +35,7 @@ def xj(xlong, Tlens):
     denoms = []
 
     for i in range(n):
-        # If the time length of the current cross-section is less than 4, skip to the next
+        # If the time length of the current cross-section is less than 20, skip to the next
         T = Tlens[i]
         if T <= 20:
             continue
