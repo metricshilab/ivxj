@@ -4,11 +4,11 @@
 
 This repository hosts a Python package to implement the IVXJ procedure in 
 
-* Liao, Mei and Shi (2024): "Nickell Meets Stambaugh: A Tale of Two Biases in Panel Predictive Regressions" [[ResearchGate-link]](http://dx.doi.org/10.13140/RG.2.2.35464.64004)
+* Chengwang Liao, Ziwei Mei and Zhentao Shi (2024): "Nickell Meets Stambaugh: A Tale of Two Biases in Panel Predictive Regressions" [[ResearchGate-link]](http://dx.doi.org/10.13140/RG.2.2.35464.64004)
 
-At this current status, it computes the IVXJ estimates and the corresponding \\(t\\)-statistics for unbalanced panel data under a simple regression specification. It is sufficient to replicate the empirical application in the paper.
+At this current status, it computes the IVXJ estimates and the corresponding \\(t\\)-statistics for unbalanced panel data under a simple regression specification. It can be used to replicate the empirical application in the paper.
 
-Multivariate regression and long-horizon predictions will be subsumed in future versions.
+Extensions of multivariate regressions and long-horizon predictions will be subsumed in future versions.
 
 Documentation is provided here [here](https://ivxj.readthedocs.io/en/latest/index.html).
 
@@ -20,14 +20,14 @@ $ pip install git+https://github.com/metricshilab/ivxj.git
 
 ## Usage
 
-The main function of this package is `ivxj`. It compute key estimates for unbalanced panel data analysis, including:
+The main function of this package is `ivxj`. It computes the key estimates for unbalanced panel data analysis, including:
 
 - **IVX Estimate**: The estimated coefficients using the IVX method.
 - **IVXJ Estimate**: The debiased estimates from the IVXJ method.
 - **Standard Error**: The standard errors associated with the estimates.
-- **XJ-adjusted \\(\rho\\) Estimate**: The adjusted estimate of \\(\rho\\), reflecting the effects of the instruments.
+- **XJ-adjusted \\(\rho\\) Estimate**: The adjusted estimate of \\(\rho\\).
 
-Here's a step-by-step example demonstrating how to use the `ivxj` package:
+Here's a step-by-step example demonstrating the usage of the `ivxj` package:
 
 ```python
 import pandas as pd
