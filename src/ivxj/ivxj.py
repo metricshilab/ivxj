@@ -54,6 +54,7 @@ def ivxj(data, rhoz, identity=None, time=None, y_name=None, x_name=None):
     Example 1: Applying IVXJ to an unbalanced panel dataset
 
     >>> import pandas as pd
+    >>> import numpy as np
     >>> data = pd.DataFrame({
     ...     'id': np.repeat([1, 2], 21),
     ...     'time': np.tile(np.arange(1, 22), 2), 

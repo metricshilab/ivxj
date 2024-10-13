@@ -31,6 +31,7 @@ Here's a step-by-step example demonstrating how to use the `ivxj` package:
 
 ```python
 import pandas as pd
+import numpy as np
 import ivxj
 
 # Prepare your input data as a pandas DataFrame
